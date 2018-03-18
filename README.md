@@ -1,11 +1,10 @@
 
-
 # autoscholar
 A computer program that automatically read scientific papers for you
 
 ## dependencies
 
-### 1. python2.7. NOT compatible with python3+
+### 1. requires python2.7. NOT compatible with python3+
 
 ### 2. requires the following python packages:
 
