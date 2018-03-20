@@ -37,10 +37,10 @@ To extract highlighted text from the sqlite database into `ouput_files`
 
 - `python extract.py` `db_file` `output_file`
 
-(e.g. `python extract.py /path/to/your/mendeley/your@email.address@www.mendeley.com.sqlite highlighted_text.csv`)
+  (e.g. `python extract.py /path/to/your/mendeley/your@email.address@www.mendeley.com.sqlite highlighted_text.csv`)
 
 To compute the frequencies of the words in extracted highlighted text and store the result into `output_files`
 
 - `python word_count.py` `highlight_text_file` `output_file`
 
-(e.g. `python word_count.py highlighted_text.csv word_count.csv`)
+  (e.g. `python word_count.py highlighted_text.csv word_count.csv`)
