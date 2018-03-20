@@ -5,12 +5,12 @@ A computer program that automatically read scientific papers for you
 
 autoscholar requires python 2.7 and the following python packages:
 
-- PyPDF2
-- sqlite3
-- pandas (0.16 or later)
-- pdftotext (sudo apt-get install poppler-utils)
-- numpy
-- BeautifulSoup4
+- `PyPDF2`
+- `sqlite3`
+- `pandas (0.16 or later)`
+- `pdftotext` (sudo apt-get install poppler-utils)
+- `numpy`
+- `BeautifulSoup4`
 
 ## Setup
 
