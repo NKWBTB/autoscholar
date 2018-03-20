@@ -1,9 +1,7 @@
 # autoscholar
-
 A computer program that automatically read scientific papers for you
 
 ## Dependencies
-
 autoscholar requires python 2.7 and the following python packages:
 
 - `PyPDF2`
@@ -14,7 +12,6 @@ autoscholar requires python 2.7 and the following python packages:
 - `BeautifulSoup4`
 
 ## Setup
-
 ### Install menotexport
 
 First, you need to get menotexport installed. 
@@ -34,17 +31,14 @@ For the installation of menotexport please follow this link: https://github.com/
 - `menotexport.py` 
 
 ## Usage
-
 - `python extract.py` `db_file` `output_file`
   
-  Extract highlighted text from the sqlite database into `ouput_files`
+    Extract highlighted text from the sqlite database into `ouput_files`
   
-  (e.g. `python extract.py /path/to/your/mendeley/your@email.address@www.mendeley.com.sqlite highlighted_text.csv`)
-
-### To count the word frequency
+    (e.g. `python extract.py /path/to/your/mendeley/your@email.address@www.mendeley.com.sqlite highlighted_text.csv`)
 
 - `python word_count.py` `highlight_text_file` `output_file`
 
-  Compute the frequencies of the words in extracted highlighted text and store the result into `output_files`
+    Compute the frequencies of the words in extracted highlighted text and store the result into `output_files`
 
-  (e.g. `python word_count.py highlighted_text.csv word_count.csv`)
+    (e.g. `python word_count.py highlighted_text.csv word_count.csv`)
