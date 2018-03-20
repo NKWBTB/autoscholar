@@ -14,9 +14,15 @@ autoscholar requires python 2.7 and the following python packages:
 ## Setup
 ### Install menotexport
 
-First, you need to get menotexport installed. 
+First, you need to get menotexport installed.
 
-For the installation of menotexport please follow this link: https://github.com/Xunius/Menotexport
+Open terminal and move to your workspace
+
+Type `git init` followed by `git clone https://github.com/Xunius/Menotexport.git`
+
+For more information about the installation of menotexport please follow this link: https://github.com/Xunius/Menotexport
+
+### Update files
 
 Open Menotexport folder and remove file `menotexport.py` 
 
