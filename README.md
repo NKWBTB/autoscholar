@@ -16,24 +16,26 @@ autoscholar requires python 2.7 and the following python packages:
 
 ### Install menotexport
 
-First, you need to get menotexport tool installed. 
+First, you need to get menotexport installed. 
 
-For the installation of menotexport please follow https://github.com/Xunius/Menotexport
+For the installation of menotexport please follow this link: https://github.com/Xunius/Menotexport
 
 ### Copy the following files into `MenoTexport` folder and replace with the original files
 
 - `extract.py`
 - `word_count.py` 
 
-Copy files `lib/exportannotation.py lib/exportpdf.py lib/get_highlighted_text.py lib/menotexport.py` into `Menotexport-master/lib/`
-and replace with its original files
+### Copy the folowing files into the sub folder `lib` and replace with the original files
+
+- `lib/exportannotation.py` 
+- `lib/exportpdf.py lib/`
+- `get_highlighted_text.py` 
+- `lib/menotexport.py` 
 
 ## Usage
 
-### To extract highlighted text
-
-python extract.py db_file output_file 
-
+- `python extract.py` `db_file` `output_file`
+  Extract highlighted text from the sqlite database into ouput_files
 (e.g. `python extract.py /path/to/your/mendeley/your@email.address@www.mendeley.com.sqlite highlighted_text.csv`)
 
 ### To count the word frequency
