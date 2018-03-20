@@ -18,9 +18,10 @@ autoscholar requires python 2.7 and the following python packages:
 
 For the installation of menotexport https://github.com/Xunius/Menotexport
 
-### Replace files to `MenoTexport` folder
+### Copy the following files into `MenoTexport` folder and replace with the original files
 
-Copy files `extract.py` and `word_count.py`  into folder `Menotexport-master` 
+- `extract.py`
+- `word_count.py` 
 
 Copy files `lib/exportannotation.py lib/exportpdf.py lib/get_highlighted_text.py lib/menotexport.py` into `Menotexport-master/lib/`
 and replace with its original files
