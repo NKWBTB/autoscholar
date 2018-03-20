@@ -20,21 +20,22 @@ First, you need to get menotexport installed.
 
 For the installation of menotexport please follow this link: https://github.com/Xunius/Menotexport
 
-### Copy the following files into `MenoTexport` folder and replace with the original files
+### Copy the following files into `Menotexport` folder and replace with the original files
 
 - `extract.py`
 - `word_count.py` 
 
-### Copy the folowing files into the sub folder `lib` and replace with the original files
+### Copy the folowing files from `autoscholar/lib` into the sub folder `Menotexport/lib` and replace with the original files
 
-- `lib/exportannotation.py` 
-- `lib/exportpdf.py lib/`
+- `exportannotation.py` 
+- `exportpdf.py` 
 - `get_highlighted_text.py` 
-- `lib/menotexport.py` 
+- `menotexport.py` 
 
 ## Usage
 
 - `python extract.py` `db_file` `output_file`
+  
   Extract highlighted text from the sqlite database into `ouput_files`
   
   (e.g. `python extract.py /path/to/your/mendeley/your@email.address@www.mendeley.com.sqlite highlighted_text.csv`)
