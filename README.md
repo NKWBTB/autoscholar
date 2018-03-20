@@ -2,11 +2,11 @@
 # autoscholar
 A computer program that automatically read scientific papers for you
 
-## dependencies
+## Dependencies
 
-### 1. requires python2.7. NOT compatible with python3+
+autoscholar requires python 2.7
 
-### 2. requires the following python packages:
+autoscholar requires the following python packages:
 
     - PyPDF2
     - sqlite3
