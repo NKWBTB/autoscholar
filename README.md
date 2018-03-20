@@ -1,4 +1,5 @@
 # autoscholar
+
 A computer program that automatically read scientific papers for you
 
 ## Dependencies
@@ -46,4 +47,4 @@ For the installation of menotexport please follow this link: https://github.com/
 
   Compute the frequencies of the words in extracted highlighted text and store the result into `output_files`
 
-(e.g. `python word_count.py highlighted_text.csv word_count.csv`)
+  (e.g. `python word_count.py highlighted_text.csv word_count.csv`)
