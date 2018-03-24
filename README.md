@@ -12,13 +12,20 @@ autoscholar requires python 2.7
     ~$ sudo apt-get update
 
     ~$ sudo apt-get install python-pip
+    
+    ~$ pip install --upgrade pip
 
  The following python packages are required:
-
-
+ 
 - `PyPDF2`
-- `sqlite3`
+
+     ~$ pip install PyPDF2
+  
+- `sqlite3` (included in the standard library (since Python 2.5))
 - `pandas (0.16 or later)`
+
+    ~$ pip install pandas
+ 
 - `pdftotext` (sudo apt-get install poppler-utils)
 - `numpy`
 - `BeautifulSoup4`
