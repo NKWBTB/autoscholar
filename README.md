@@ -15,20 +15,31 @@ autoscholar requires python 2.7
     
     ~$ pip install --upgrade pip
 
- The following python packages are required:
+The following python packages are required:
+ 
+- `sqlite3` (included in the standard library (since Python 2.5))
+ 
  
 - `PyPDF2`
 
      ~$ pip install PyPDF2
   
-- `sqlite3` (included in the standard library (since Python 2.5))
+
 - `pandas (0.16 or later)`
 
     ~$ pip install pandas
  
-- `pdftotext` (sudo apt-get install poppler-utils)
 - `numpy`
+
+    ~$ pip install numpy
+
 - `BeautifulSoup4`
+
+    ~$ pip install beautifulsoup4
+
+- `pdftotext` 
+
+    ~$ sudo apt-get install poppler-utils
 
 ## Setup
 ### Install menotexport
