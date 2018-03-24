@@ -47,10 +47,11 @@ def get_docid(conn):
 		docid.append(r[0])
 	return docid
 
+
 def process(db,outdir,annotations,docids,allfolders,action,separate,iszotero,verbose):
 
 	count=0
-		#------------Get raw annotation data------------
+		#----------------Get raw annotation data----------------
 	for ii,idii in enumerate(docids):
 		count+=1
 		if count==3:
@@ -61,23 +62,25 @@ def process(db,outdir,annotations,docids,allfolders,action,separate,iszotero,ver
 		print('\n# <Menotexport>: No annotations found among Canonical docs.')
 		return exportfaillist,annofaillist,bibfaillist,risfaillist
 	else:
-		#---------------Reformat annotations---------------
+		#Reformat
 		annotations=menotexport.reformatAnno(annotations)
 
-			#----------Extract annotations from PDFs----------
+			
 	if len(annotations)>0:
 		if verbose:
 			printHeader('Extracting annotations from PDFs ...',2)
+		#----------------Extract annotations----------------
 		annotations,flist=menotexport.extractAnnos(annotations,action,verbose)
 
 		
-	#------------Export annotations to txt------------
+	#----------------Prepare for formated output->ret----------------
 	if ('m' in action or 'n' in action) and len(annotations)>0:
 		if verbose:
 			printHeader('Exporting annotations to text file...',2)
 		flist,ret=exportAnno(annotations,action,verbose)
 
 		return ret
+
 
 def exportAnno(annodict,action,verbose=True):
 
@@ -111,6 +114,7 @@ def exportAnno(annodict,action,verbose=True):
 
 	return annofaillist,ret_list
 
+
 #------------------Export annotations in a single PDF------------------
 def _exportAnnoFile(anno,verbose=True):
 
@@ -143,7 +147,8 @@ def main(data_base_file,abspath_filename):
 	outdir,output_filename=os.path.split(abspath_filename)
 
 	conn = create_connection(data_base_file)
-
+	
+	#-----------------set up parameters-----------------
 	annotations = {}
 
 	action = ['m']
@@ -159,8 +164,6 @@ def main(data_base_file,abspath_filename):
 	verbose= True
 
 	ret=process(conn,outdir,annotations,canonical_doc_ids,allfolders,action,separate,iszotero,verbose)
-
-
 
 	counter=1
 	with open(abspath_filename, 'w+') as mf:
