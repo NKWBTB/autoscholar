@@ -2,7 +2,19 @@
 A computer program that automatically read scientific papers for you
 
 ## Dependencies
-autoscholar requires python 2.7 and the following python packages:
+
+autoscholar requires python 2.7
+
+    Recommend using pip as package manager
+
+    To insall pip, open your terminal and copy the following commands
+
+    ~$ sudo apt-get update
+
+    ~$ sudo apt-get install python-pip
+
+ The following python packages are required:
+
 
 - `PyPDF2`
 - `sqlite3`
