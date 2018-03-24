@@ -1,74 +1,59 @@
-,# autoscholar
-A computer program that automatically read scientific papers for you
+# autoscholar
+A computer program that automatically reads scientific papers for you
 
 ## Dependencies
 
 autoscholar requires python 2.7
 
-    Recommend using pip as package manager
-
-    To insall pip, open your terminal and copy the following commands
-
-    ~$ sudo apt-get update
-
-    ~$ sudo apt-get install python-pip
-    
-    ~$ pip install --upgrade pip
-
 The following python packages are required:
  
-- `sqlite3` (included in the standard library (since Python 2.5))
-  
-- `PyPDF2`
+- sqlite3 (included in the standard library since Python 2.5)
+- PyPDF2
+- pandas (0.16 or later) 
+- numpy
+- BeautifulSoup4
+- pdftotext
+- [menotexport](https://github.com/Xunius/Menotexport)
 
-     ~$ pip install PyPDF2  
+On Debian/Ubuntu distributions, you may install pdftotext, git (for pulling autoscholar later), and pip (recommend for installing other Python packages) as follows: 
 
-- `pandas (0.16 or later)`
+    $ sudo apt-get install poppler-utils python-pip git
 
-    ~$ pip install pandas
- 
-- `numpy`
+The Python packages may be installed using pip like this: 
 
-    ~$ pip install numpy
+    $ pip install PyPDF2 pandas numpy beautifulsoup4 
+    
+For menoexport, please refer to https://github.com/Xunius/Menotexport for installation steps. A quick solution is to simply clone it to your local directory, like this: 
 
-- `BeautifulSoup4`
-
-    ~$ pip install beautifulsoup4
-
-- `pdftotext` 
-
-    ~$ sudo apt-get install poppler-utils
+    $ mkdir ~/work_dir       # create a working directory 
+    $ cd ~/work_dir          # enter the working directory 
+    $ git clone https://github.com/Xunius/Menotexport.git
 
 ## Setup
-### Install menotexport
+First, clone autoscholar, like this: 
 
-First, you need to download menotexport
+    $ cd ~/work_dir          # enter the working directory
+    $ git clone https://github.com/forrestbao/autoscholar.git
 
-Open terminal and move to your workspace
+Then, copy or link the `lib` folder under `Menotexport` into `autoscholar`. For example, the command below will create a symbolic link from the `autoscholar/lib` to `Menotexport/lib`:
 
-Type `git clone https://github.com/Xunius/Menotexport.git` to download menotexport
-
-For more information about the installation of menotexport please follow this link: https://github.com/Xunius/Menotexport
-
-### Install autoscholar
-
-Second, you need to download autoscholar
-
-Type `https://github.com/forrestbao/autoscholar.git` to download autoscholar
-
-Then, copy the `lib` folder from `menotexport` into `autoscholar` and we are now all set 
-
+    $ ln -s  ~/work_dir/Menotexport/lib/ ~/work_dir/autoscholar/lib
+    
 ## Usage
-You can use autoscholar to extract highlights from Mendeley Desktop and then computer the word frequency
+### Extract highlights on PDF files made in Mendeley 
+Mendeley uses a sqlite database file to store the highlights in PDF papers. Currently CSV is the only format to dump the highlights into. The usage is:  
 
-To extract highlighted text from the sqlite database into `ouput_files`
+`python extract.py sqlite_db_file highlights_file` 
 
-- `python extract.py db_file output_file`
+For example, 
 
-  e.g., `python extract.py path/to/your/mendeley/your@email.address@www.mendeley.com.sqlite highlighted_text.csv`
+    $ python extract.py path/to/your/mendeley/your@email.address@www.mendeley.com.sqlite highlights.csv
 
-To compute the frequencies of the words in extracted highlighted text and store the result into `output_files`
+### Count word frequencies 
+You may further count the frequencies of words in extracted highlighted text, and store the result into another CSV-format file. The usage is: 
 
-- `python word_count.py highlight_text_file output_file`
+`python word_count.py highlights_file word_freq_file`
 
-  e.g., `python word_count.py highlighted_text.csv word_count.csv`
+For example, 
+
+    $ python word_count.py highlights.csv word_count.csv
