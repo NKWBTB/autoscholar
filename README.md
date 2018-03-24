@@ -44,29 +44,21 @@ The following python packages are required:
 ## Setup
 ### Install menotexport
 
-First, you need to get menotexport installed.
+First, you need to download menotexport
 
 Open terminal and move to your workspace
 
-Type `git init` followed by `git clone https://github.com/Xunius/Menotexport.git`
+Type `git clone https://github.com/Xunius/Menotexport.git` to download menotexport
 
 For more information about the installation of menotexport please follow this link: https://github.com/Xunius/Menotexport
 
-### Update files
+### Install autoscholar
 
-Open Menotexport folder and remove file `menotexport.py` 
+Second, you need to download autoscholar
 
-Copy the following files into `Menotexport` folder and replace with the original files
+Type `https://github.com/forrestbao/autoscholar.git` to download autoscholar
 
-- `extract.py`
-- `word_count.py` 
-
-Copy the folowing files from `autoscholar/lib` into the sub folder `Menotexport/lib` and replace with the original files
-
-- `exportannotation.py` 
-- `exportpdf.py` 
-- `get_highlighted_text.py` 
-- `menotexport.py` 
+Then, copy the `lib` folder from `menotexport` into `autoscholar` and we are now all set 
 
 ## Usage
 You can use autoscholar to extract highlights from Mendeley Desktop and then computer the word frequency
