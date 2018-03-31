@@ -53,8 +53,8 @@ def process(db,outdir,annotations,docids,allfolders,action,separate,iszotero,ver
 		#------------Get raw annotation data------------
 	for ii,idii in enumerate(docids):
 		count+=1
-		if count==3:
-			break
+		#if count==3:
+		#	break
 		annotations=menotexport.getHighlights(db,annotations,folderid=None,foldername=None,filterdocid=idii)
 
 	if len(annotations)==0:

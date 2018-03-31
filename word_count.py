@@ -41,18 +41,12 @@ def count_unigram(words):
     return dic
 
 def sort_by_count(dic):
-    tree = BST()
-    count=0;
-    for k in dic.keys():
-        
-        item = dic.get(k)
-        n = Node(k,item) 
-        if tree.root is None:
-            tree.setRoot(n)
-        else:
-            tree.insert(n)
-        count=count+1
-    return tree,count
+    sort_list=[]
+    for key, value in sorted(dic.iteritems(), key=lambda (k,v): (v,k)):
+        #print "%s: %s" % (key, value)    
+        sort_list.append([key,value])
+
+    return sort_list
 
 def main(lighlight_text_file, word_count_file):
     
@@ -66,14 +60,26 @@ def main(lighlight_text_file, word_count_file):
             counter+=1
             words.append(lemmatize_sentence(row[3],words))
         dic = count_unigram(words)
-    
+        
+        lst=sort_by_count(dic)
+        print(lst)
+            
     with codecs.open(word_count_file, 'w+',) as mf:
         wr = csv.writer(mf)  
-        for r in dic:
-            if r is not None:
-                row =[r.encode("utf-8"),str(dic[r]).encode("utf-8")]
-            print(row)
-            wr.writerow(row)
+        for r in lst:
+            if r[0] is not None:
+                row =[r[0].encode("utf-8"),str(r[1]).encode("utf-8")]
+                #print(row)
+                wr.writerow(row) 
+            
+            """    
+        with codecs.open(word_count_file, 'w+',) as mf:
+            wr = csv.writer(mf)  
+            for r in dic:
+                if r is not None:
+                    row =[r.encode("utf-8"),str(dic[r]).encode("utf-8")]
+                    print(row)
+                    wr.writerow(row)"""
   
 if __name__ == '__main__':
     #lighlight_text_file->input
