@@ -10,6 +10,7 @@ from lib.tools import printHeader, printInd, printNumHeader
 from datetime import datetime
 from urllib import unquote
 from urlparse import urlparse
+from subprocess import call
 import menotexport
 
 sql_command='''
@@ -46,16 +47,108 @@ def get_docid(conn):
 	for r in rows:
 		docid.append(r[0])
 	return docid
+def convert_pdf_to_text(pdf_folder_name):
+		
+	
+	#path="/home/todd/ra/autoscholar/exported pdfs"
+	path=pdf_folder_name
+	
+	for filename in os.listdir(path):
+		if filename.endswith(".pdf"):
+			file_name=os.path.join(path,filename)
+			call(["pdftotext",file_name])	
+def export_pdf_to_folder(db,outdir):
+	
+	folder_name="exported pdfs"
+	
+	#-----------------set up parameters-----------------
+	annotations = {}
 
+	action = ['p']
 
-def process(db,outdir,annotations,docids,allfolders,action,separate,iszotero,verbose):
+	docids = get_docid(db)
 
+	allfolders=True
+
+	separate= True
+
+	iszotero=False
+
+	verbose= True	
+	
+	exportfaillist=[]
+	annofaillist=[]
+	bibfaillist=[]
+	risfaillist=[]
+	
+	ishighlight=False
+	isnote=False	
+	
+	for ii,idii in enumerate(docids):
+		if ishighlight:
+			annotations=getHighlights(db,annotations,folderid=None,foldername=None,filterdocid=idii)
+		if isnote:
+			annotations=getNotes(db,annotations,folderid=None,foldername=None,filterdocid=idii)
+			annotations=getDocNotes(db,annotations,folderid=None,foldername=None,filterdocid=idii)
+	
+	if len(annotations)==0:
+		print('\n# <Menotexport>: No annotations found among Canonical docs.')
+		if 'b' not in action and 'p' not in action:
+			return exportfaillist,annofaillist,bibfaillist,risfaillist
+	else:
+			#---------------Reformat annotations---------------
+			annotations=reformatAnno(annotations)
+	
+	#------Get other docs without annotations------
+	otherdocs=menotexport.getOtherCanonicalDocs(db,docids,annotations.keys())	
+	
+	#--------Make subdir using folder name--------
+	outdir_folder=os.path.join(outdir,folder_name)
+	if not os.path.isdir(outdir_folder):
+		os.makedirs(outdir_folder)	
+	
+	if 'p' in action:
+		if len(annotations)>0:
+			if verbose:
+				printHeader('Exporting annotated PDFs ...',2)
+			flist=exportpdf.exportAnnoPdf(annotations,\
+	                                  outdir_folder,verbose)
+			exportfaillist.extend(flist)
+
+		#--------Copy other PDFs to target location--------
+		if len(otherdocs)>0:
+			if verbose:
+				printHeader('Exporting un-annotated PDFs ...',2)
+			flist=exportpdf.copyPdf(otherdocs,outdir_folder,verbose)
+			exportfaillist.extend(flist)
+	
+	return outdir_folder
+	
+	
+def process_highlight(db,abspath_filename):
+	
+	
+	#-----------------set up parameters-----------------
+	annotations = {}
+
+	action = ['m']
+
+	docids = get_docid(db)
+
+	allfolders=True
+
+	separate= True
+
+	iszotero=False
+
+	verbose= True
+	
 	count=0
 		#----------------Get raw annotation data----------------
 	for ii,idii in enumerate(docids):
 		count+=1
-		#if count==3:
-		#	break
+		if count==3:
+			break
 		annotations=menotexport.getHighlights(db,annotations,folderid=None,foldername=None,filterdocid=idii)
 
 	if len(annotations)==0:
@@ -79,7 +172,13 @@ def process(db,outdir,annotations,docids,allfolders,action,separate,iszotero,ver
 			printHeader('Exporting annotations to text file...',2)
 		flist,ret=exportAnno(annotations,action,verbose)
 
-		return ret
+	
+	counter=1
+	with open(abspath_filename, 'w+') as mf:
+		wr= csv.writer(mf)
+		for reti in ret:
+			for retii in reti:
+				wr.writerow(retii)	
 
 
 def exportAnno(annodict,action,verbose=True):
@@ -147,28 +246,18 @@ def main(data_base_file,abspath_filename):
 	outdir,output_filename=os.path.split(abspath_filename)
 
 	conn = create_connection(data_base_file)
+
+	#extract highlight into file
+	process_highlight(conn,abspath_filename)
 	
-	#-----------------set up parameters-----------------
-	annotations = {}
+	
+	#export all pdf into folder
+	pdf_folder_name=export_pdf_to_folder(conn,outdir)
+	
+	
+	#convert pdf to txt file
+	convert_pdf_to_text(pdf_folder_name)
+	
+	
 
-	action = ['m']
-
-	canonical_doc_ids = get_docid(conn)
-
-	allfolders=True
-
-	separate= True
-
-	iszotero=False
-
-	verbose= True
-
-	ret=process(conn,outdir,annotations,canonical_doc_ids,allfolders,action,separate,iszotero,verbose)
-
-	counter=1
-	with open(abspath_filename, 'w+') as mf:
-		wr= csv.writer(mf)
-		for reti in ret:
-			for retii in reti:
-				wr.writerow(retii)
 
