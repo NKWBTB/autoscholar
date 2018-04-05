@@ -56,9 +56,9 @@ def main(lighlight_text_file, word_count_file):
         counter=1
         for row in reader:
             #print(counter,row[3])
-            row[3]=unicode(row[3], "utf-8")
+            row[1]=unicode(row[1], "utf-8")
             counter+=1
-            words.append(lemmatize_sentence(row[3],words))
+            words.append(lemmatize_sentence(row[1],words))
         dic = count_unigram(words)
         
         lst=sort_by_count(dic)

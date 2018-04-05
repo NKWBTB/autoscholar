@@ -56,7 +56,33 @@ def convert_pdf_to_text(pdf_folder_name):
 	for filename in os.listdir(path):
 		if filename.endswith(".pdf"):
 			file_name=os.path.join(path,filename)
-			call(["pdftotext",file_name])	
+			call(["pdftotext",file_name])
+
+def remove_exported_pdfs(pdf_folder_name):
+	path = pdf_folder_name
+	for filename in os.listdir(path):
+		if filename.endswith(".pdf"):
+			file_name=os.path.join(path,filename)
+			call(["rm",file_name])
+
+def process_pdf_text(pdf_folder_name,output_pdf_text_filename):
+	path = pdf_folder_name
+	
+	#write to output file
+	counter=1
+	with open(output_pdf_text_filename, 'w+') as mf:
+		wr= csv.writer(mf)
+		for filename in os.listdir(path):
+			if filename.endswith(".txt"):
+				file_name=os.path.join(path,filename)
+				filename, extension = os.path.splitext(filename)
+				with open(file_name) as file: 
+					data = file.readlines()
+					for d in data:
+						row=[filename,d]
+						wr.writerow(row)
+			
+			
 def export_pdf_to_folder(db,outdir):
 	
 	folder_name="exported pdfs"
@@ -125,7 +151,7 @@ def export_pdf_to_folder(db,outdir):
 	return outdir_folder
 	
 	
-def process_highlight(db,abspath_filename):
+def process_highlight(db,output):
 	
 	
 	#-----------------set up parameters-----------------
@@ -146,9 +172,9 @@ def process_highlight(db,abspath_filename):
 	count=0
 		#----------------Get raw annotation data----------------
 	for ii,idii in enumerate(docids):
-		count+=1
-		if count==3:
-			break
+		#count+=1
+		#if count==3:
+			#break
 		annotations=menotexport.getHighlights(db,annotations,folderid=None,foldername=None,filterdocid=idii)
 
 	if len(annotations)==0:
@@ -172,14 +198,13 @@ def process_highlight(db,abspath_filename):
 			printHeader('Exporting annotations to text file...',2)
 		flist,ret=exportAnno(annotations,action,verbose)
 
-	
+	#write to output file
 	counter=1
-	with open(abspath_filename, 'w+') as mf:
+	with open(output, 'w+') as mf:
 		wr= csv.writer(mf)
 		for reti in ret:
 			for retii in reti:
 				wr.writerow(retii)	
-
 
 def exportAnno(annodict,action,verbose=True):
 
@@ -213,8 +238,6 @@ def exportAnno(annodict,action,verbose=True):
 
 	return annofaillist,ret_list
 
-
-#------------------Export annotations in a single PDF------------------
 def _exportAnnoFile(anno,verbose=True):
 
 	conv=lambda x:unicode(x)
@@ -235,20 +258,21 @@ def _exportAnnoFile(anno,verbose=True):
 			hlstr=hljj.text
 			outstr=u'''{}\n'''.format(hlstr)
 			outstr=outstr.encode('utf8','replace')
-			ret=[hldocid,title,path,outstr]
+			#ret=[hldocid,title,path,outstr]
+			ret=[title,outstr]
 			ret_list.append(ret)
 
 	return ret_list
 
 
-def main(data_base_file,abspath_filename):     
+def main(data_base_file,output_highlight_filename,output_pdf_text_filename):     
 
-	outdir,output_filename=os.path.split(abspath_filename)
+	outdir,output_filename=os.path.split(output_highlight_filename)
 
 	conn = create_connection(data_base_file)
 
 	#extract highlight into file
-	process_highlight(conn,abspath_filename)
+	process_highlight(conn,output_highlight_filename)
 	
 	
 	#export all pdf into folder
@@ -258,6 +282,10 @@ def main(data_base_file,abspath_filename):
 	#convert pdf to txt file
 	convert_pdf_to_text(pdf_folder_name)
 	
+	#remove exported pdfs
+	remove_exported_pdfs(pdf_folder_name)
 	
+	#write text from pdfs into output file
+	process_pdf_text(pdf_folder_name,output_pdf_text_filename)
 
 
